@@ -1,6 +1,8 @@
 ---
 title: "STA302"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 date: "2024-10-03"
 ---
 
@@ -10,13 +12,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Loading Data
 ```{r}
+
 #install.packages('tidyverse')
 library(tidyverse)
 
 data <- read_csv("dating_data.csv")
 
 names(data) <- gsub(" ", "_", names(data)) #Changes Spaces to Underlines: 
-names(data)
+
 ```
 
 ## Add Full names
@@ -59,9 +62,6 @@ data <- data %>%
     country == "CF" ~ "Central African Republic",
     TRUE ~ NA_character_  # For any unmatched values, set to NA
   ))
-
-# Print the updated dataset to check
-print(data)
 
 ```
 
@@ -108,89 +108,63 @@ data <- data %>%
 
 # Removes the outlier for count_kisses
 data <- filter(data, counts_kisses != 9288)
-
-# Print the updated dataset to check
-print(data)
 ```
 
-## Regression Model 1
+## Regression Model 1 & Residual Plots
 ```{r}
 
-# Inital Model with the given predictors
+# MODEL ONE: Regression
 model <- lm(counts_kisses ~ age + counts_pictures + counts_profileVisits + country_pop + genderLooking, data = data)
 
-# Residual vs Fitted plot
+# RESIDUAL PLOTS 
+par(mfrow = c(1, 3)) # Environment 2
+# 1. Residual vs Fitted plot
 x1 = fitted(model)
 y1 = resid(model)
-plot(x = x1, y = y1, xlab = "Fitted", ylab = "Residual")
+plot_model1 <- plot(x = x1, y = y1, xlab = "Fitted", ylab = "Residual", main = "Residual vs Fitted")
 
-# Response Histogram
-hist(
-  data$counts_kisses, 
-  breaks = 200, 
-  main = "Reponse Histogram", 
-  xlim = c(0, 2000), 
-  xlab = "Number of Likes", 
-  col = "lightblue"
-  )
+# 2. Residual vs Predictor: Age 
+plot(y1 ~ data$age, main = "Residual vs Age", 
+     xlab = "Age", ylab = "Residual")
 
-#qqplot: Check normality 
-qqnorm(y1)
+# 3. Residual vs Predictor: counts_picture 
+plot(y1 ~ data$counts_pictures, main = "Residual vs Number of Prictures", 
+     xlab = "Number of Pictures", ylab = "Residual")
+
+par(mfrow = c(1, 1))
+
+par(mfrow = c(1, 2)) # Environment 2
+# 4. Residual vs Predictor: country_pop 
+plot(y1 ~ data$country_pop, main = "Residual vs Country Population", 
+     xlab = "Country Population", ylab = "Residual")
+# 5. Residual vs Predictor: counts_profileVisits 
+plot(y1 ~ data$counts_profileVisits, main = "Residual vs Profile Visits", 
+     xlab = "Profile Vists", ylab = "Residual")
+par(mfrow = c(1, 1))
+
+par(mfrow = c(1, 2)) # Environment 3
+# 6. Residual vs Predictor: genderLooking
+boxplot(y1 ~ data$genderLooking, main = "Residual vs Gender of Interest", 
+     xlab = "Gender of Interest", ylab = "Residual", names = c('Female', 'Both', 'Male', 'None'))
+
+# QQ-NORM PLOTS 
+qqnorm_model1 <- qqnorm(y1, ylim = c(-1000, 1000))
 qqline(y1)
+
+par(mfrow = c(1, 1))
 
 ```
 
-## Checking Conditions
+## Checking Two Conditions
 ```{r}
-
 # Checking Assumption 1: Response vs Fitted
-plot(x = x1, y = data$counts_kisses, main = "Likes vs Fitted", xlab = "Fitted", ylab = "Likes")
+condition_1 <- plot(x = x1, y = data$counts_kisses, main = "Likes vs Fitted", xlab = "Fitted", ylab = "Likes", ylim = c(0, 3100))
 abline(a=0, b=1, lty=2) # 45 degree line
 
 # Checking Assumption 2: Pairwise Scatterplot
-pairs(data[, c("age", "counts_pictures", "counts_profileVisits", "country_pop")])
-
+condition_2 <- pairs(data[, c("age", "counts_pictures", "counts_profileVisits", "country_pop")])
 ```
 
-## Regression Model 2: Addressing Constant Variance
-```{r}
-
-# Transforms new predictor
-data <- data %>%
-  mutate(sqrt_count_kiss = (counts_kisses)^(1/2))
-
-# Select only the relevant columns for the model and remove rows with NA, NaN, or Inf
-new_data <- data %>%
-  select(sqrt_count_kiss, age, counts_pictures, counts_profileVisits, country_pop, genderLooking) %>%
-  filter_all(all_vars(!is.na(.))) %>%
-  filter_all(all_vars(!is.infinite(.))) %>%
-  filter_all(all_vars(. != 0))
-
-#view(new_data)
-
-# Create the linear model using cleaned data
-model2 <- lm(sqrt_count_kiss ~ age + counts_pictures + counts_profileVisits + country_pop + genderLooking, data = new_data)
-
-# Extract fitted values and residuals
-x2 <- fitted(model2)
-y2 <- resid(model2)
-
-# Plot the fitted values against residuals
-plot(x = x2, y = y2, xlim = c(0, 50), ylim = c(-20, 20), xlab = "Fitted", ylab = "Residual")
-
-# Response Histogram
-hist(
-  data$sqrt_count_kiss, 
-  breaks = 50, 
-  main = "Reponse Histogram", 
-  xlim = c(0, 100), 
-  xlab = "Number of Likes", 
-  col = "lightblue"
-  )
-
-#qqplot: Check normality 
-qqnorm(y2)
-qqline(y2)
 
 
-```
+
