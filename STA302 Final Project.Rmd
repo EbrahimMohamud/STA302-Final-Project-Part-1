@@ -110,6 +110,21 @@ data <- data %>%
 data <- filter(data, counts_kisses != 9288)
 ```
 
+## Summary Tables
+```{r}
+summary(data$counts_kisses)
+
+summary(data$age)
+
+summary(data$counts_pictures)
+
+summary(data$counts_profileVisits)
+
+summary(data$country_pop)
+
+summary(data$genderLooking)
+```
+
 ## Regression Model 1 & Residual Plots
 ```{r}
 
