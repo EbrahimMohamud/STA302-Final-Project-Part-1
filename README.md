@@ -189,7 +189,7 @@ hist(
   )
 
 #qqplot: Check normality 
-qqnorm(y2, xlim = c(-3, 3), ylim = c(-20, 20))
+qqnorm(y2)
 qqline(y2)
 
 
