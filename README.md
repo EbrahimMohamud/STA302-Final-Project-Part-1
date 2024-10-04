@@ -166,7 +166,7 @@ new_data <- data %>%
   filter_all(all_vars(!is.infinite(.))) %>%
   filter_all(all_vars(. != 0))
 
-view(new_data)
+#view(new_data)
 
 # Create the linear model using cleaned data
 model2 <- lm(sqrt_count_kiss ~ age + counts_pictures + counts_profileVisits + country_pop + genderLooking, data = new_data)
