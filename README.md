@@ -1,4 +1,3 @@
-# STA302-Project
 ---
 title: "STA302"
 output: html_document
@@ -108,7 +107,6 @@ data <- data %>%
     TRUE ~ NA_real_  # For any unmatched values, set to NA
   ))
 
-
 names(data) #Provides names of variables
 
 # Print the updated dataset to check
@@ -117,8 +115,6 @@ print(data)
 
 ## Regression Model 1
 ```{r}
-
-names(data)
 
 # Inital Model with the given predictors
 model <- lm(counts_kisses ~ age + counts_pictures + counts_profileVisits + country_pop + genderLooking, data = data)
@@ -131,13 +127,58 @@ plot(x = x1, y = y1, xlab = "Fitted", ylab = "Residual")
 # Response Histogram
 hist(
   data$counts_kisses, 
-  breaks = 100, 
+  breaks = 200, 
   main = "Reponse Histogram", 
   xlim = c(0, 2000), 
   xlab = "Number of Likes", 
   col = "lightblue"
   )
 
+#qqplot: Check normality 
+qqnorm(y1, xlim = c(-3, 3), ylim = c(-500, 500))
+qqline(y1)
+
 ```
 
+## Regression Model 2: Addressing Constant Variance
+```{r}
 
+# Transforms new predictor
+data <- data %>%
+  mutate(sqrt_count_kiss = (counts_kisses)^(1/2))
+
+# Select only the relevant columns for the model and remove rows with NA, NaN, or Inf
+new_data <- data %>%
+  select(sqrt_count_kiss, age, counts_pictures, counts_profileVisits, country_pop, genderLooking) %>%
+  filter_all(all_vars(!is.na(.))) %>%
+  filter_all(all_vars(!is.infinite(.))) %>%
+  filter_all(all_vars(. != 0))
+
+view(new_data)
+
+# Create the linear model using cleaned data
+model2 <- lm(sqrt_count_kiss ~ age + counts_pictures + counts_profileVisits + country_pop + genderLooking, data = new_data)
+
+# Extract fitted values and residuals
+x2 <- fitted(model2)
+y2 <- resid(model2)
+
+# Plot the fitted values against residuals
+plot(x = x2, y = y2, xlim = c(0, 50), ylim = c(-20, 20), xlab = "Fitted", ylab = "Residual")
+
+# Response Histogram
+hist(
+  data$sqrt_count_kiss, 
+  breaks = 50, 
+  main = "Reponse Histogram", 
+  xlim = c(0, 100), 
+  xlab = "Number of Likes", 
+  col = "lightblue"
+  )
+
+#qqplot: Check normality 
+qqnorm(y2, xlim = c(-3, 3), ylim = c(-20, 20))
+qqline(y2)
+
+
+```
