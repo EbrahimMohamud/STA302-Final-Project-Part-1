@@ -16,7 +16,7 @@ library(tidyverse)
 data <- read_csv("dating_data.csv")
 
 names(data) <- gsub(" ", "_", names(data)) #Changes Spaces to Underlines: 
-
+names(data)
 ```
 
 ## Add Full names
@@ -63,7 +63,6 @@ data <- data %>%
 # Print the updated dataset to check
 print(data)
 
-
 ```
 
 ## Add population
@@ -107,7 +106,8 @@ data <- data %>%
     TRUE ~ NA_real_  # For any unmatched values, set to NA
   ))
 
-names(data) #Provides names of variables
+# Removes the outlier for count_kisses
+data <- filter(data, counts_kisses != 9288)
 
 # Print the updated dataset to check
 print(data)
@@ -135,8 +135,20 @@ hist(
   )
 
 #qqplot: Check normality 
-qqnorm(y1, xlim = c(-3, 3), ylim = c(-500, 500))
+qqnorm(y1)
 qqline(y1)
+
+```
+
+## Checking Conditions
+```{r}
+
+# Checking Assumption 1: Response vs Fitted
+plot(x = x1, y = data$counts_kisses, main = "Likes vs Fitted", xlab = "Fitted", ylab = "Likes")
+abline(a=0, b=1, lty=2) # 45 degree line
+
+# Checking Assumption 2: Pairwise Scatterplot
+pairs(data[, c("age", "counts_pictures", "counts_profileVisits", "country_pop")])
 
 ```
 
