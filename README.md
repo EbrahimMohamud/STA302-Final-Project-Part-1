@@ -137,6 +137,7 @@ par(mfrow = c(1, 2)) # Environment 2
 # 4. Residual vs Predictor: country_pop 
 plot(y1 ~ data$country_pop, main = "Residual vs Country Population", 
      xlab = "Country Population", ylab = "Residual")
+
 # 5. Residual vs Predictor: counts_profileVisits 
 plot(y1 ~ data$counts_profileVisits, main = "Residual vs Profile Visits", 
      xlab = "Profile Vists", ylab = "Residual")
