@@ -49,4 +49,13 @@ The preliminary results that we obtained through the dataset seemed consistent w
 ## Bibliography
 - Castro, Á., Barrada, J. R., Ramos-Villagrasa, P. J., & Fernández-del-Río, E. (2020). Profiling dating apps users: Sociodemographic and personality characteristics. _International Journal of Environmental Research and Public Health_, _19_(3), 1575. [https://doi.org/10.3390/ijerph17103653](https://doi.org/10.3390/ijerph17103653)
 
-- Hitsch, G. J., Hortaçsu, A., & Ariely, D. (2010). What makes you click? Mate preferences in online dating. _Quantitative Marketing and Economics_, _8_(4), 393-427. [https://doi.org/10.1007/s11129-010-9088-6](https://doi.org/10.1007/s11129-010-9088
+- Hitsch, G. J., Hortaçsu, A., & Ariely, D. (2010). What makes you click? Mate preferences in online dating. _Quantitative Marketing and Economics_, _8_(4), 393-427. [https://doi.org/10.1007/s11129-010-9088-6](https://doi.org/10.1007/s11129-010-9088-6)
+
+- Ellison, N., Heino, R., & Gibbs, J. (2006). Managing impressions online: Self-presentation processes in the online dating environment. _Journal of Computer-Mediated Communication_, _11_(2), 415-441. [https://doi.org/10.1111/j.1083-6101.2006.00020.x](https://doi.org/10.1111/j.1083-6101.2006.00020.x)
+
+- Kaggle dataset: Mabilama Jeffrey Mvutu. (2015). Dating App Lovoo User Profiles. Kaggle. [https://www.kaggle.com/datasets/jmmvutu/dating-app-lovoo-user-profiles](https://www.kaggle.com/datasets/jmmvutu/dating-app-lovoo-user-profiles)
+
+- Original source of the Kaggle dataset: Jfreex. (2015). Dating App User Profiles’ Stats - Lovoo v3. Data World. [https://data.world/jfreex/dating-app-user-profiles-stats-lovoo-v3](https://data.world/jfreex/dating-app-user-profiles-stats-lovoo-v3)
+
+- Population data: World Bank. (2024). Population, total (SP.POP.TOTL). [https://data.worldbank.org/indicator/SP.POP.TOTL?locations=1W](https://data.worldbank.org/indicator/SP.POP.TOTL?locations=1W)
+ 
