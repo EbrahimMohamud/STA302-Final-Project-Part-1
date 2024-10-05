@@ -23,7 +23,7 @@ Our chosen response variable, _counts\_kisses_, is a quantitative variable that 
 
 | **Predictor**             | **Summary**                                              |
 |---------------------------|----------------------------------------------------------|
-| *Min, 1st Quart, Med, Mean, 3rd Quart, Max*                                           |
+|                                                      | *Min, 1st Quart, Med, Mean, 3rd Quart, Max*   |
 | **1. counts\_profileVisits** (number of clicks on user's profile) | {0, 383, 1222, 3705, 4063, 164425} |
 | **2. counts\_pictures** (number of pictures on user's profile)   | {0.00, 2.00, 4.00, 4.79, 6.00, 30.00} |
 | **3. age** (in years)                                          | {18.00, 20.00, 22.00, 21.99, 24.00, 28.00} |
